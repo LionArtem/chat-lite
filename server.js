@@ -1,7 +1,15 @@
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
+
+const io = require('socket.io')(server, {
+    cors: {
+        origin: '*',
+        methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+    }
+});
 
 const rooms = new Map();
 
