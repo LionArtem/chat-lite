@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import JoinBlock from './components/JoinBlock';
 
 function App() {
+
+  
+
   return (
     <div className="App">
       <JoinBlock />
