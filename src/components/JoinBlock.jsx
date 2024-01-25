@@ -6,6 +6,11 @@ export default function JoinBlock() {
   const [user, setUser] = useState('');
 
   const onEnter = () => {
+    fetch('http://localhost:9999/rooms', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ roomId, user }),
+    });
     console.log(roomId, user);
   };
 
