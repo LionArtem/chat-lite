@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import socket from '../socket';
 
-export default function JoinBlock() {
+export default function JoinBlock({ onLogin }) {
   const [roomId, setRoomId] = useState('');
   const [user, setUser] = useState('');
 
@@ -10,7 +10,7 @@ export default function JoinBlock() {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ roomId, user }),
-    });
+    }).then(onLogin);
     console.log(roomId, user);
   };
 

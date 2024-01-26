@@ -47,7 +47,8 @@ app.post('/rooms', (req, res) => {
       ])
     );
   }
-  res.send();
+
+  res.send([...rooms.keys()]);
   console.log('hello');
 });
 
