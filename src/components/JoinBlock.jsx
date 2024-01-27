@@ -15,7 +15,10 @@ export default function JoinBlock({ onLogin }) {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
-    }).then(onLogin(obj));
+    }).then((res) => {
+      console.log(res.json().then((res) => console.log(res)));
+      onLogin(obj);
+    });
     //console.log(roomId, user);
   };
 

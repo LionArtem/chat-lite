@@ -42,21 +42,22 @@ app.post('/rooms', (req, res) => {
     rooms.set(
       roomId,
       new Map([
-        ['user', new Map([])],
+        ['users', new Map([])],
         ['messages', []],
       ])
     );
   }
-
   res.send([...rooms.keys()]);
   console.log('hello');
 });
 
 io.on('connection', (socket) => {
-  socket.on('ROOM:JOIN',(data)=>{
-    console.log(data);
-  })
-  console.log('socket connection', socket.id);
+  socket.on('ROOM:JOIN', ({ roomId, user }) => {
+    rooms.get(roomId).get('users').set(socket.id, user);
+    const users = rooms.get(roomId).get('users').values();
+    // socket.to(roomId).broadcast.emit('ROOM:JOIN', users);
+    socket.broadcast.to(roomId).emit('ROOM:JOIN', users)
+  });
 });
 
 server.listen(9999, (err) => {
