@@ -4,14 +4,19 @@ import socket from '../socket';
 export default function JoinBlock({ onLogin }) {
   const [roomId, setRoomId] = useState('');
   const [user, setUser] = useState('');
+  //const [isLoading, setLoading] = useState(true);
 
   const onEnter = () => {
+    const obj = {
+      roomId,
+      user,
+    };
     fetch('http://localhost:9999/rooms', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ roomId, user }),
-    }).then(onLogin);
-    console.log(roomId, user);
+      body: JSON.stringify(obj),
+    }).then(onLogin(obj));
+    //console.log(roomId, user);
   };
 
   return (
