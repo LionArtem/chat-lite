@@ -2,12 +2,15 @@ import React, { useReducer, useState } from 'react';
 import JoinBlock from './components/JoinBlock';
 import reduser from './reducer';
 import socket from './socket';
+import Chat from './components/Chat';
 
 function App() {
   const [state, dispatch] = useReducer(reduser, {
     joined: false,
     roomId: null,
-    user: null,
+    userName: null,
+    users: [],
+    messages: [],
   });
 
   const onLogin = (obj) => {
@@ -20,11 +23,10 @@ function App() {
       console.log('новый пользователь ', user);
     });
   }, []);
-  
 
   return (
     <div className="App">
-      {!state.joined && <JoinBlock onLogin={onLogin} />}
+      {!state.joined ? <JoinBlock onLogin={onLogin} /> : <Chat />}
     </div>
   );
 }
