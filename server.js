@@ -48,15 +48,14 @@ app.post('/rooms', (req, res) => {
     );
   }
   res.send([...rooms.keys()]);
-  console.log('hello');
 });
 
 io.on('connection', (socket) => {
   socket.on('ROOM:JOIN', ({ roomId, user }) => {
+    socket.join(roomId);
     rooms.get(roomId).get('users').set(socket.id, user);
-    const users = rooms.get(roomId).get('users').values();
-    // socket.to(roomId).broadcast.emit('ROOM:JOIN', users);
-    socket.broadcast.to(roomId).emit('ROOM:JOIN', users)
+    const users = [...rooms.get(roomId).get('users').values()];
+    socket.broadcast.to(roomId).emit('ROOM:JOINED', users);
   });
 });
 

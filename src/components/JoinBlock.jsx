@@ -16,7 +16,7 @@ export default function JoinBlock({ onLogin }) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
     }).then((res) => {
-      console.log(res.json().then((res) => console.log(res)));
+      //console.log(res.json().then((res) => console.log(res)));
       onLogin(obj);
     });
     //console.log(roomId, user);
