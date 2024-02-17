@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
+import socket from '../socket';
 
-export default function Chat({ users }) {
+export default function Chat({ users, messages, userName, roomId }) {
+    console.log(messages);
   const [message, setMessage] = useState('');
 
-  const listMessage = [
-    'message',
-    'message',
-    'message',
-    'message',
-    'message',
-    'message',
-  ];
+  console.log(users); //??без этого не обновляются пользователи??
 
-  //   const listUsers = ['user1', 'user2', 'user3', 'user4', 'user5', 'user6'];
+  const onSendMessage = (evt) => {
+    evt.preventDefault();
+    socket.emit('ROOM:NEW_MESSAGE', {
+      roomId,
+      text: message,
+      userName,
+    });
+
+    setMessage('');
+  };
 
   return (
     <>
@@ -26,8 +30,11 @@ export default function Chat({ users }) {
       </div>
       <div>
         <ul>
-          {listMessage.map((message, i) => (
-            <li key={i}>{message}</li>
+          {messages.map((message, i) => (
+            <li key={i}>
+              <p>{message.text}</p>
+              <span>{message.userName}</span>
+            </li>
           ))}
         </ul>
         <form>
@@ -36,7 +43,7 @@ export default function Chat({ users }) {
             onChange={(evt) => setMessage(evt.target.value)}
             type="text"
           />
-          <button>send</button>
+          <button onClick={(evt) => onSendMessage(evt)}>send</button>
         </form>
       </div>
     </>

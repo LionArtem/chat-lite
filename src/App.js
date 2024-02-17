@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import JoinBlock from './components/JoinBlock';
 import reduser from './reducer';
 import socket from './socket';
@@ -31,17 +31,21 @@ function App() {
   };
 
   React.useEffect(() => {
-    socket.on('ROOM:JOINED', setUsers);
+    console.log(35);
     socket.on('ROOM:SET_USERS', setUsers);
+    socket.on('ROOM:NEW_MESSAGE', (message) => {
+      dispatch({
+        type: 'NEW_MESSAGE',
+        payload: message,
+      });
+    });
+
+    return () => socket.off('ROOM:NEW_MESSAGE');
   }, []);
 
   return (
     <div className="App">
-      {!state.joined ? (
-        <JoinBlock onLogin={onLogin} />
-      ) : (
-        <Chat users={state.users} />
-      )}
+      {!state.joined ? <JoinBlock onLogin={onLogin} /> : <Chat {...state} />}
     </div>
   );
 }
