@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Chat() {
+export default function Chat({ users }) {
   const [message, setMessage] = useState('');
 
   const listMessage = [
@@ -12,14 +12,14 @@ export default function Chat() {
     'message',
   ];
 
-  const listUsers = ['user1', 'user2', 'user3', 'user4', 'user5', 'user6'];
+  //   const listUsers = ['user1', 'user2', 'user3', 'user4', 'user5', 'user6'];
 
   return (
     <>
       <div>
-        users
+        <p>{`users: ${users.length}`}</p>
         <ul>
-          {listUsers.map((user, i) => (
+          {users?.map((user, i) => (
             <li key={i}>{user}</li>
           ))}
         </ul>

@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 
 export default function JoinBlock({ onLogin }) {
   const [roomId, setRoomId] = useState('');
-  const [user, setUser] = useState('');
+  const [userName, setUserName] = useState('');
   //const [isLoading, setLoading] = useState(true);
 
   const onEnter = () => {
     const obj = {
       roomId,
-      user,
+      userName,
     };
     fetch('http://localhost:9999/rooms', {
       method: 'POST',
@@ -31,8 +31,8 @@ export default function JoinBlock({ onLogin }) {
       ></input>
       <input
         placeholder="name"
-        value={user}
-        onChange={(evt) => setUser(evt.target.value)}
+        value={userName}
+        onChange={(evt) => setUserName(evt.target.value)}
       ></input>
       <button onClick={onEnter}>click</button>
     </div>

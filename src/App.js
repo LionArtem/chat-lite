@@ -13,20 +13,35 @@ function App() {
     messages: [],
   });
 
-  const onLogin = (obj) => {
+  const onLogin = async (obj) => {
     dispatch({ type: 'JOINED', payload: obj });
     socket.emit('ROOM:JOIN', obj);
+    const data = await fetch(`http://localhost:9999/rooms/${obj.roomId}`, {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' },
+    });
+
+    data.json().then((res) => {
+      setUsers(res.users);
+    });
+  };
+
+  const setUsers = (users) => {
+    dispatch({ type: 'SET_USERS', payload: users });
   };
 
   React.useEffect(() => {
-    socket.on('ROOM:JOINED', (user) => {
-      console.log('новый пользователь ', user);
-    });
+    socket.on('ROOM:JOINED', setUsers);
+    socket.on('ROOM:SET_USERS', setUsers);
   }, []);
 
   return (
     <div className="App">
-      {!state.joined ? <JoinBlock onLogin={onLogin} /> : <Chat />}
+      {!state.joined ? (
+        <JoinBlock onLogin={onLogin} />
+      ) : (
+        <Chat users={state.users} />
+      )}
     </div>
   );
 }
