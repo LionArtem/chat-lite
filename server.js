@@ -63,13 +63,15 @@ io.on('connection', (socket) => {
     socket.join(roomId);
     rooms.get(roomId).get('users').set(socket.id, userName);
     const users = [...rooms.get(roomId).get('users').values()];
-    socket.to(roomId).emit('ROOM:SET_USERS', users);
+    //socket.to(roomId).emit('ROOM:SET_USERS', users);
+    io.in(roomId).emit('ROOM:SET_USERS', users);
   });
 
   socket.on('ROOM:NEW_MESSAGE', ({ roomId, userName, text }) => {
     const obj = { userName, text };
     rooms.get(roomId).get('messages').push(obj);
-    socket.broadcast.to(roomId).emit('ROOM:NEW_MESSAGE', obj);
+    // socket.broadcast.to(roomId).emit('ROOM:NEW_MESSAGE', obj);
+    io.in(roomId).emit('ROOM:NEW_MESSAGE', obj);
   });
 
   socket.on('disconnect', () => {

@@ -22,7 +22,11 @@ function App() {
     });
 
     data.json().then((res) => {
-      setUsers(res.users);
+      // // setUsers(res.users);
+      // dispatch({
+      //   type: 'SET_DATA',
+      //   payload: res,
+      // });
     });
   };
 
@@ -30,14 +34,17 @@ function App() {
     dispatch({ type: 'SET_USERS', payload: users });
   };
 
+  const addMessage = (message) => {
+    dispatch({
+      type: 'NEW_MESSAGE',
+      payload: message,
+    });
+  };
+
   React.useEffect(() => {
-    console.log(35);
     socket.on('ROOM:SET_USERS', setUsers);
     socket.on('ROOM:NEW_MESSAGE', (message) => {
-      dispatch({
-        type: 'NEW_MESSAGE',
-        payload: message,
-      });
+      addMessage(message);
     });
 
     return () => socket.off('ROOM:NEW_MESSAGE');
@@ -45,7 +52,11 @@ function App() {
 
   return (
     <div className="App">
-      {!state.joined ? <JoinBlock onLogin={onLogin} /> : <Chat {...state} />}
+      {!state.joined ? (
+        <JoinBlock onLogin={onLogin} />
+      ) : (
+        <Chat {...state} onAddMessage={addMessage} />
+      )}
     </div>
   );
 }

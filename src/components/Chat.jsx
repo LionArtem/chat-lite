@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import socket from '../socket';
 
-export default function Chat({ users, messages, userName, roomId }) {
-    console.log(messages);
+export default function Chat({
+  users,
+  messages,
+  userName,
+  roomId,
+  onAddMessage,
+}) {
   const [message, setMessage] = useState('');
 
   console.log(users); //??без этого не обновляются пользователи??
@@ -14,7 +19,6 @@ export default function Chat({ users, messages, userName, roomId }) {
       text: message,
       userName,
     });
-
     setMessage('');
   };
 
@@ -33,7 +37,7 @@ export default function Chat({ users, messages, userName, roomId }) {
           {messages.map((message, i) => (
             <li key={i}>
               <p>{message.text}</p>
-              <span>{message.userName}</span>
+              <span>{`User: ${message.userName}`}</span>
             </li>
           ))}
         </ul>
