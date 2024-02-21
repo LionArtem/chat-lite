@@ -47,7 +47,7 @@ function App() {
       addMessage(message);
     });
 
-    return () => socket.off('ROOM:NEW_MESSAGE');
+   // return () => socket.off('ROOM:NEW_MESSAGE');
   }, []);
 
   return (

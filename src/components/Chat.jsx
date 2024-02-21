@@ -10,7 +10,7 @@ export default function Chat({
 }) {
   const [message, setMessage] = useState('');
 
-  console.log(users); //??без этого не обновляются пользователи??
+  //console.log(users); //??без этого не обновляются пользователи??
 
   const onSendMessage = (evt) => {
     evt.preventDefault();
