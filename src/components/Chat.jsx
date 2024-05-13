@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import socket from '../socket';
+import React, { useState } from "react";
+import socket from "../socket";
 
 export default function Chat({
   users,
@@ -8,18 +8,20 @@ export default function Chat({
   roomId,
   onAddMessage,
 }) {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+ // console.log(messages);
 
   //console.log(users); //??без этого не обновляются пользователи??
 
   const onSendMessage = (evt) => {
+    //console.log(17);
     evt.preventDefault();
-    socket.emit('ROOM:NEW_MESSAGE', {
+    socket.emit("ROOM:NEW_MESSAGE", {
       roomId,
       text: message,
       userName,
     });
-    setMessage('');
+    setMessage("");
   };
 
   return (

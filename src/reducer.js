@@ -1,6 +1,7 @@
 const reducer = (state, action) => {
+ 
   switch (action.type) {
-    case 'JOINED':
+    case "JOINED":
       return {
         ...state,
         joined: true,
@@ -8,20 +9,20 @@ const reducer = (state, action) => {
         userName: action.payload.userName,
       };
 
-    case 'SET_DATA':
+    case "SET_DATA":
       return {
         ...state,
         users: action.payload.users,
         messages: action.payload.messages,
       };
 
-    case 'SET_USERS':
+    case "SET_USERS":
       return {
         ...state,
         users: action.payload,
       };
 
-    case 'NEW_MESSAGE':
+    case "NEW_MESSAGE":
       return {
         ...state,
         messages: [...state.messages, action.payload],
